@@ -31,4 +31,36 @@ public class Produto {
 	@NotBlank(message = "Insira a descrição do jogo!")
 	@Size(max = 255, message = "A descrição não deve ultrapassar os 255 caracteres.")
 	private String descricao;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getFaixaEtaria() {
+		return faixaEtaria;
+	}
+
+	public void setFaixaEtaria(String faixaEtaria) {
+		this.faixaEtaria = faixaEtaria;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 }
