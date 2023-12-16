@@ -12,7 +12,7 @@
 	<artifactId>lojagames</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>lojagames</name>
-	<description>Projeto Blog Pessoal parte da formação Bootcamp Fullstack Generation</description>
+	<description>Projeto Loja Games parte da formação Bootcamp Fullstack Generation</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
