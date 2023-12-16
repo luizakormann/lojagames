@@ -1,4 +1,4 @@
-package controller;
+package com.generation.lojagames.controller;
 
 import java.util.List;
 
@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.generation.lojagames.model.Produto;
+import com.generation.lojagames.repository.CategoriaRepository;
+import com.generation.lojagames.repository.ProdutoRepository;
+
 import jakarta.validation.Valid;
-import model.Produto;
-import repository.ProdutoRepository;
 
 @RestController
 @RequestMapping("/produtos")
@@ -28,6 +30,8 @@ public class ProdutoController {
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	@Autowired
+	private CategoriaRepository categoriaRepository;
 
 	@GetMapping
 	public ResponseEntity<List<Produto>> getAll() {
@@ -44,28 +48,33 @@ public class ProdutoController {
 	public ResponseEntity<List<Produto>> getByNome(@PathVariable String nome) {
 		return ResponseEntity.ok(produtoRepository.findAllByNomeContainingIgnoreCase(nome));
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<Produto> post(@RequestBody Produto produto) {
-		return ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto));
+		if (categoriaRepository.existsById(produto.getCategoria().getId()))
+			return ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto));
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Categoria não existe", null);
 	}
-	
+
 	@PutMapping
 	public ResponseEntity<Produto> put(@Valid @RequestBody Produto produto) {
 
 		if (produtoRepository.existsById(produto.getId()))
-			return ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto));
+			if (categoriaRepository.existsById(produto.getCategoria().getId()))
+				return ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto));
+			else
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 		else
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
-		
+
 		if (produtoRepository.existsById(id))
 			produtoRepository.deleteById(id);
-		
+
 		else
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 	}

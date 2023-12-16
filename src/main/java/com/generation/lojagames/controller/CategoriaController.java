@@ -1,4 +1,4 @@
-package controller;
+package com.generation.lojagames.controller;
 
 import java.util.List;
 
@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.generation.lojagames.model.Categoria;
+import com.generation.lojagames.repository.CategoriaRepository;
+
 import jakarta.validation.Valid;
-import model.Categoria;
-import repository.CategoriaRepository;
 
 @RestController
 @RequestMapping("/categorias")
